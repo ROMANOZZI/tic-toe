@@ -1,7 +1,7 @@
 import React from "react";
 import Timer from "./Timer";
 import Grid from "./Grid";
-import useWindowSize from "../../../tenzie game/src/useWindowSize";
+import useWindowSize from "../useWindowSize";
 import Confetti from "react-confetti";
 function Match({ player1, player2, setPlayer1, setPlayer2, setSelected }) {
   const [currntPlayer, setCurrentPlayer] = React.useState(player1);

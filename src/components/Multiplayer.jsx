@@ -7,7 +7,7 @@ import { getDatabase, ref, set } from "firebase/database";
 const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
   const [showInput, setShowInput] = React.useState(null);
   const OpponentID = React.useRef();
-  console.log(myplayer);
+
   return (
     <div className="container">
       <img src={xStroke} className="xStroke"></img>

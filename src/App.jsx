@@ -25,7 +25,7 @@ function App() {
 
   const [clicked, setClicked] = useState(false);
   const [hoster, setHoster] = useState(null);
-  const [myplayer, setmyPlayer] = useState({ id: "" });
+  const [myplayer, setmyPlayer] = useState({});
 
   const signIn = (auth) =>
     signInAnonymously(auth)
@@ -46,6 +46,7 @@ function App() {
             role: "",
           });
         }
+
         setmyPlayer({ id: user.uid, role: "" });
         // ...
         writeUserData(user.uid);
@@ -57,12 +58,13 @@ function App() {
     });
 
     onValue(ref(db, "players/" + myplayer.id), (snapshot) => {
+      console.log(myplayer.id);
       setmyPlayer({ ...snapshot.val() });
     });
-  }, [startFireBase()]);
+  }, [startFireBase(), getAuth()]);
   React.useEffect(() => {
     const db = getDatabase();
-    set(ref(db, "players/", Object.keys(myplayer)[0]), {
+    set(ref(db, "players/" + myplayer.id), {
       ...myplayer,
     });
   }, [myplayer]);
@@ -71,6 +73,8 @@ function App() {
   }
   if (mode == 1) {
     //*multiplayer
+    const auth = getAuth();
+    signInAnonymously(auth);
     startFireBase();
 
     return clicked ? (
