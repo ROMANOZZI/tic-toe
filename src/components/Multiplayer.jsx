@@ -3,11 +3,31 @@ import xStroke from "../Assets/xStroke.png";
 import oStroke from "../Assets/oStroke.png";
 import startFireBase from "../FirebaseConfig";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
+import { getDatabase, ref, set, remove } from "firebase/database";
+const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   const [showInput, setShowInput] = React.useState(null);
   const OpponentID = React.useRef();
-
+  const db = getDatabase();
+  const makeGame = (player1ID) => {
+    set(ref(db, "games/" + myplayer.id), {
+      player1: player1ID,
+    });
+  };
+  const joinGame = (hosterID) => {
+    if (games[hosterID] != undefined) {
+      set(ref(db, "games/" + hosterID)),
+        {
+          ...games[hosterID],
+          player2: myplayer.id,
+        };
+    }
+  };
+  // to disable joining self capability
+  React.useEffect(() => {
+    if (myplayer.role == "visitor" && games[myplayer.id]) {
+      remove(ref(db, "games/" + myplayer.id));
+    }
+  }, [myplayer.role]);
   return (
     <div className="container">
       <img src={xStroke} className="xStroke"></img>
@@ -18,8 +38,9 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
           <button
             className="gamebtn"
             onClick={() => {
-              setShowInput(true);
+              setShowInput(false);
               setmyPlayer((prev) => ({ ...prev, role: "hoster" }));
+              makeGame(myplayer.id);
             }}
           >
             Create game
@@ -27,7 +48,7 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
           <button
             className="gamebtn"
             onClick={() => {
-              setShowInput(false),
+              setShowInput(true),
                 setmyPlayer((prev) => ({ ...prev, role: "visitor" }));
             }}
           >
@@ -43,9 +64,6 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
                   type="text"
                   ref={OpponentID}
                   placeholder="enter your friend ID"
-                  onChange={(e) => {
-                    console.log(OpponentID.current.value);
-                  }}
                 ></input>
 
                 <input
@@ -57,7 +75,9 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer }) => {
                     margin: "auto",
                     marginTop: "1.5em",
                   }}
-                  onClick={() => []}
+                  onClick={() => {
+                    joinGame(OpponentID.current.value);
+                  }}
                 ></input>
               </React.Fragment>
             ) : (

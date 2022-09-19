@@ -26,7 +26,7 @@ function App() {
   const [clicked, setClicked] = useState(false);
   const [hoster, setHoster] = useState(null);
   const [myplayer, setmyPlayer] = useState({});
-
+  const [games, setGames] = React.useState();
   const signIn = (auth) =>
     signInAnonymously(auth)
       .then(() => {})
@@ -58,8 +58,10 @@ function App() {
     });
 
     onValue(ref(db, "players/" + myplayer.id), (snapshot) => {
-      console.log(myplayer.id);
       setmyPlayer({ ...snapshot.val() });
+    });
+    onValue(ref(db, "games/"), (snapshot) => {
+      setGames(snapshot.val());
     });
   }, [startFireBase(), getAuth()]);
   React.useEffect(() => {
@@ -102,6 +104,7 @@ function App() {
         setClicked={setClicked}
         setmyPlayer={setmyPlayer}
         myplayer={myplayer}
+        games={games}
       ></Multiplayer>
     );
   } else if (mode == 2) {
