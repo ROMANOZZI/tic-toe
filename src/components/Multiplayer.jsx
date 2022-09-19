@@ -8,6 +8,7 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   const [showInput, setShowInput] = React.useState(null);
   const OpponentID = React.useRef();
   const db = getDatabase();
+  console.log(games);
   const makeGame = (player1ID) => {
     set(ref(db, "games/" + myplayer.id), {
       player1: player1ID,
@@ -24,7 +25,7 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (Object.hasOwn(games ? games[myplayer.id] : {}, "player2")) {
+    if (games.filter((x) => (x.player1 = myplayer.id)).lenght > 0) {
       setClicked(true);
     }
   });
