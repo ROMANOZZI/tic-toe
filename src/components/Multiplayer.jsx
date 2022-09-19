@@ -15,13 +15,19 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   };
   const joinGame = (hosterID) => {
     if (games[hosterID] != undefined) {
-      set(ref(db, "games/" + hosterID)),
-        {
-          ...games[hosterID],
-          player2: myplayer.id,
-        };
+      set(ref(db, "games/" + hosterID), {
+        ...games[hosterID],
+        player2: myplayer.id,
+      });
+      setClicked(true);
     }
   };
+  //to enter the game if someone joined me
+  React.useEffect(() => {
+    if (Object.hasOwn(games ? games[myplayer.id] : {}, "player2")) {
+      setClicked(true);
+    }
+  });
   // to disable joining self capability
   React.useEffect(() => {
     if (myplayer.role == "visitor" && games[myplayer.id]) {

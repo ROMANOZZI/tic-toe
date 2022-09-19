@@ -12,12 +12,16 @@ const Start = ({
   player1,
   setSelected,
   signIn,
-
+  games,
   mode,
 }) => {
   //experiments
 
   const handleClick = (e) => {
+    if (mode == 1) {
+      signIn(auth);
+      console.log(Object.entries(games));
+    }
     e.currentTarget.value == "x"
       ? setPlayer1((prev) => ({ ...prev, symbol: "x", winner: false }))
       : setPlayer1((prev) => ({ ...prev, symbol: "o", winner: false }));
@@ -26,9 +30,6 @@ const Start = ({
       ? setPlayer2((prev) => ({ ...prev, symbol: "o", winner: false }))
       : setPlayer2((prev) => ({ ...prev, symbol: "x", winner: false }));
     setSelected(true);
-    if (mode == 1) {
-      signIn(auth);
-    }
   };
 
   return (

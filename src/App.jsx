@@ -96,6 +96,7 @@ function App() {
           setSelected={setSelected}
           signIn={signIn}
           mode={mode}
+          games={games}
         ></Start>
       )
     ) : (
@@ -122,6 +123,8 @@ function App() {
         setPlayer2={setPlayer2}
         player1={player1}
         setSelected={setSelected}
+        mode={mode}
+        games={games}
       ></Start>
     );
   }
