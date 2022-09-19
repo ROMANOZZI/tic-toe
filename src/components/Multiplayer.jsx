@@ -25,11 +25,10 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (
-      games.length > 0 &&
-      games.filter((x) => (x.player1 = myplayer.id)).length > 0
-    ) {
-      setClicked(true);
+    if (games.lenght > 0) {
+      if (games.filter((x) => x.player1 == myplayer.id).length > 0) {
+        setClicked(true);
+      }
     }
   });
   // to disable joining self capability
