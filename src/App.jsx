@@ -26,7 +26,7 @@ function App() {
   const [clicked, setClicked] = useState(false);
   const [hoster, setHoster] = useState(null);
   const [myplayer, setmyPlayer] = useState({});
-  const [games, setGames] = React.useState([]);
+  const [games, setGames] = React.useState({});
   const signIn = (auth) =>
     signInAnonymously(auth)
       .then(() => {})
@@ -61,7 +61,7 @@ function App() {
       setmyPlayer({ ...snapshot.val() });
     });
     onValue(ref(db, "games/"), (snapshot) => {
-      setGames((prev) => [...prev, snapshot.val()]);
+      setGames((prev) => ({ ...snapshot.val() }));
     });
   }, [startFireBase(), getAuth()]);
   React.useEffect(() => {

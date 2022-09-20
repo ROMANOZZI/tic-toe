@@ -25,7 +25,7 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (games.lenght > 0) {
+    if (Object.keys(games).lenght > 0) {
       if (games.filter((x) => x.player1 == myplayer.id).length > 0) {
         setClicked(true);
       }
