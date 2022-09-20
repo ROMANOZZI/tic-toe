@@ -25,12 +25,13 @@ const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (Object.keys(games).lenght > 0) {
+   
+    if (Object.keys(games).length > 0) {
       if (Object.hasOwn(games[myplayer.id], "player2")) {
         setClicked(true);
       }
     }
-  });
+  },[games]);
   // to disable joining self capability
   React.useEffect(() => {
     if (myplayer.role == "visitor" && games[myplayer.id]) {
