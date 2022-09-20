@@ -14,13 +14,15 @@ const Start = ({
   signIn,
   games,
   mode,
+  myplayer
 }) => {
   //experiments
 
   const handleClick = (e) => {
     if (mode == 1) {
-      signIn(auth);
+      
       if (myplayer.role == "hoster") {
+        console.log('set info')
         const db = getDatabase();
         set(ref(db, "games/" + myplayer.id + "/player1"), {
           id: myplayer.id,
