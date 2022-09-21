@@ -26,7 +26,7 @@ const Start = ({
         const db = getDatabase();
         set(ref(db, "games/" + myplayer.id + "/player1"), {
           id: myplayer.id,
-          symbol: e.currentTarget,
+          symbol: e.currentTarget.value,
         });
       }
     }
