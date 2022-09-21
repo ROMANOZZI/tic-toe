@@ -20,8 +20,16 @@ const Start = ({
   const handleClick = (e) => {
     if (mode == 1) {
       signIn(auth);
-      console.log(Object.entries(games));
+      if (myplayer.role == "hoster") {
+        const db = getDatabase();
+        set(ref(db, "games/" + myplayer.id + "/player1"), {
+          id: myplayer.id,
+          symbol: e.currentTarget,
+        });
+      }
     }
+    //!stop here
+
     e.currentTarget.value == "x"
       ? setPlayer1((prev) => ({ ...prev, symbol: "x", winner: false }))
       : setPlayer1((prev) => ({ ...prev, symbol: "o", winner: false }));
@@ -40,7 +48,10 @@ const Start = ({
 
         <div className="heading">
           <p>TIC-TAC-TOE</p>
-          <p id="question">pick who goes first ?</p>
+          <p id="question">
+            {" "}
+            {mode ? "pick who goes first ?" : "choose your symbol"}
+          </p>
           <div className="buttonsContainer">
             <button value={"x"} className="btn" onClick={handleClick}>
               <img src={Xpic} width="76px"></img>

@@ -4,33 +4,44 @@ import oStroke from "../Assets/oStroke.png";
 import startFireBase from "../FirebaseConfig";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, set, remove } from "firebase/database";
-const Multiplayer = ({ clicked, setClicked, setmyPlayer, myplayer, games }) => {
+const Multiplayer = ({
+  clicked,
+  setClicked,
+  setmyPlayer,
+  myplayer,
+  games,
+  setSelected,
+}) => {
+  console.log(myplayer);
   const [showInput, setShowInput] = React.useState(null);
   const OpponentID = React.useRef();
   const db = getDatabase();
   console.log(games);
   const makeGame = (player1ID) => {
     set(ref(db, "games/" + myplayer.id), {
-      player1: player1ID,
+      player1: { id: player1ID },
     });
   };
   const joinGame = (hosterID) => {
     if (games[hosterID] != undefined) {
       set(ref(db, "games/" + hosterID), {
         ...games[hosterID],
-        player2: myplayer.id,
+        player2: { id: myplayer.id },
       });
-      setClicked(true);
+      if (Object.hasOwn(games[hosterID].player1, "symbol")) {
+        setClicked(true);
+        setSelected(true);
+      }
     }
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (Object.keys(games).lenght > 0) {
+    if (Object.keys(games).length > 0) {
       if (Object.hasOwn(games[myplayer.id], "player2")) {
         setClicked(true);
       }
     }
-  });
+  }, [games]);
   // to disable joining self capability
   React.useEffect(() => {
     if (myplayer.role == "visitor" && games[myplayer.id]) {

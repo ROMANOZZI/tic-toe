@@ -97,6 +97,7 @@ function App() {
           signIn={signIn}
           mode={mode}
           games={games}
+          myplayer={myplayer}
         ></Start>
       )
     ) : (
@@ -106,6 +107,7 @@ function App() {
         setmyPlayer={setmyPlayer}
         myplayer={myplayer}
         games={games}
+        setSelected={setSelected}
       ></Multiplayer>
     );
   } else if (mode == 2) {
