@@ -36,12 +36,20 @@ const Multiplayer = ({
   };
   //to enter the game if someone joined me
   React.useEffect(() => {
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 2d59ccfd4d7887ef203d9bfa0b9c2991ba546cb3
     if (Object.keys(games).length > 0) {
       if (Object.hasOwn(games[myplayer.id], "player2")) {
         setClicked(true);
       }
     }
+<<<<<<< HEAD
   }, [games]);
+=======
+  },[games]);
+>>>>>>> 2d59ccfd4d7887ef203d9bfa0b9c2991ba546cb3
   // to disable joining self capability
   React.useEffect(() => {
     if (myplayer.role == "visitor" && games[myplayer.id]) {
