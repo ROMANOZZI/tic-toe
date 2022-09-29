@@ -14,19 +14,21 @@ const Start = ({
   signIn,
   games,
   mode,
-  myplayer
+  myplayer,
 }) => {
   //experiments
 
   const handleClick = (e) => {
     if (mode == 1) {
-      
       if (myplayer.role == "hoster") {
-        console.log('set info')
         const db = getDatabase();
         set(ref(db, "games/" + myplayer.id + "/player1"), {
           id: myplayer.id,
           symbol: e.currentTarget.value,
+        });
+        set(ref(db, "games/" + myplayer.id + "/player2"), {
+          id: myplayer.id,
+          symbol: e.currentTarget.value == "o" ? "x" : "o",
         });
       }
     }

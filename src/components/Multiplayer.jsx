@@ -14,6 +14,7 @@ const Multiplayer = ({
 }) => {
   console.log(myplayer);
   const [showInput, setShowInput] = React.useState(null);
+  const [hosterId, setHosterId] = React.useState("");
   const OpponentID = React.useRef();
   const db = getDatabase();
   console.log(games);
@@ -28,17 +29,20 @@ const Multiplayer = ({
         ...games[hosterID],
         player2: { id: myplayer.id },
       });
-      if (Object.hasOwn(games[hosterID].player1, "symbol")) {
-        setClicked(true);
-        setSelected(true);
-      }
     }
   };
+
   //to enter the game if someone joined me
   React.useEffect(() => {
-    if (Object.keys(games).length > 0) {
+    if (Object.keys(games).length > 0 && myplayer.role == "hoster") {
       if (Object.hasOwn(games[myplayer.id], "player2")) {
         setClicked(true);
+      }
+    }
+    if (myplayer.role == "visitor") {
+      if (Object.hasOwn(games[hosterId].player1, "symbol")) {
+        setClicked(true);
+        setSelected(true);
       }
     }
   }, [games]);
@@ -97,6 +101,7 @@ const Multiplayer = ({
                   }}
                   onClick={() => {
                     joinGame(OpponentID.current.value);
+                    setHosterId(OpponentID.current.value);
                   }}
                 ></input>
               </React.Fragment>

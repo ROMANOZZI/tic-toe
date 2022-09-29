@@ -19,6 +19,7 @@ function Match({ player1, player2, setPlayer1, setPlayer2, setSelected }) {
     { value: "", id: 8 },
     { value: "", id: 9 },
   ]);
+  console.log(thereISwinner);
   /**
    * Todo: add the 3 rounds functionality
    */
